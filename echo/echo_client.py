@@ -22,8 +22,10 @@ if nargs > 2:
 
 s = socket.socket(socket.AF_INET, 
                   socket.SOCK_STREAM) 
-s.connect((host,port)) 
-s.send('Hello, world') 
+s.connect((host,port))
+
+mymes = raw_input("Enter something that is text: ")
+s.send(mymes) 
 data = s.recv(size) 
 s.close() 
 print 'from (%s,%s) %s' % (host, port, data)
