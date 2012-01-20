@@ -23,14 +23,14 @@ if nargs > 2:
 s = socket.socket(socket.AF_INET, 
                   socket.SOCK_STREAM) 
 s.connect((host,port))
-
-#mymes = 'my message'
-
-while True:
-    mymes = raw_input("Enter something that is text: ")
-    if not mymes: break
+mymes = raw_input("Enter something that is text: ")
+while mymes:
     s.send(mymes) 
     data = s.recv(size) 
+    s.close() 
     print 'from (%s,%s) %s' % (host, port, data)
-    
-s.close() 
+    mymes = raw_input("Enter something that is text: ")
+    s = socket.socket(socket.AF_INET, 
+                  socket.SOCK_STREAM)
+    s.connect((host,port))
+

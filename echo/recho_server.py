@@ -32,8 +32,10 @@ s.listen(backlog)
 
 while True: 
     client, address = s.accept()
-    data = client.recv(size) 
-    if data: 
-        client.send('diamar: %s' % data) 
-    print 'from %s: %s' % (address, data)
+    data = client.recv(size)
+    while len(data)>0:
+        client.send('diamar: %s' % data)
+        print 'from %s: %s' % (address, data)
+        data = client.recv(size)
+        
     client.close()
