@@ -63,7 +63,9 @@ while running:
             data = s.recv(size)
             print '%s: %s' % (s.getpeername(), data.strip('\n'))
             if data:
-                s.send('uw-student: %s' % data)
+                for cs in input: #for client socket in list of input sockets do this
+                    if cs <> server and cs <> sys.stdin: #if client socket is not the server and not the sys.stdin
+                        cs.send('by client %s: %s' % (s.getpeername(), data))
             else:
                 s.close()
                 print 'closed connection'

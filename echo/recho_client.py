@@ -12,7 +12,8 @@ import sys
 
 host = 'localhost' 
 port = 60000 
-size = 1024 
+size = 1024
+#size = 8
 
 nargs = len(sys.argv)
 if nargs > 1:
