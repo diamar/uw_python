@@ -13,13 +13,15 @@
 #   3 hours making it prettier & more pythonic
 #
 # updated for UW Internet Programming in Python, by Brian Dorsey
+# updated by Jon Jacky: in defaults, replace '127.0.0.1' with ''
+#  to allow connection from other hosts besides localhost
 #
 
 import os, socket, sys
 import time
 import datetime
 
-defaults = ['127.0.0.1', '8080']
+defaults = ['', '8080']  # '127.0.0.1' here limits connections to localhost
 mime_types = {'.jpg' : 'image/jpg', 
              '.gif' : 'image/gif', 
              '.png' : 'image/png',
@@ -87,15 +89,11 @@ def get_request(stream):
     method = None
     while True:
         line = stream.readline()
-        #print 'ABOUT TO PRINT line from get_request'
-        #print line
+        print line
         if not line.strip(): 
             break
         elif not method: 
             method, uri, protocol = line.split()
-            #print 'ABOUT TO PRINT method, uri, protocol'
-            #print method, uri, protocol  #uri is the path entered after host:8080, so like '/' or
-                                        # '/date.html'
     return uri
 
 def list_directory(uri):
@@ -107,7 +105,7 @@ def list_directory(uri):
 def get_file(path):
     f = open(path)
     try: 
-        return f.read() #reads and returns the entire contents of the file
+        return f.read()
     finally: 
         f.close()
 
@@ -115,25 +113,21 @@ def get_content(uri):
     print 'fetching:', uri
     try:
         path = '.' + uri
-        print 'ABOUT TO PRINT path from get_content'
-        print path
         if os.path.isfile(path):
             return (200, get_mime(uri), get_file(path))
         if path == './date.html':
             return (200, 'text/html', DATE_TIME)
         if os.path.isdir(path):
             if(uri.endswith('/')):
-                return (200, 'text/html', list_directory(uri)) #returns the file directory
+                return (200, 'text/html', list_directory(uri))
             else:
                 return (301, uri + '/')
         else: return (404, uri)
     except IOError, e:
         return (404, e)
 
-def get_mime(uri): #returning the type of file, from the dictionary it returns the value.
-    return mime_types.get(os.path.splitext(uri)[1], 'text/plain') #splitext gets the extension,
-                                            #if the extention is not found in mime_types dic,
-                                            #then it returns the default 'text\plain'
+def get_mime(uri):
+    return mime_types.get(os.path.splitext(uri)[1], 'text/plain')
 
 def send_response(stream, content):
     stream.write(response[content[0]] % content[1:])
@@ -146,7 +140,6 @@ if __name__ == '__main__':
     try:
         while True:
             stream = listen (server)
-            print stream
             send_response(stream, get_content(get_request(stream)))
             stream.close()
     except KeyboardInterrupt:
