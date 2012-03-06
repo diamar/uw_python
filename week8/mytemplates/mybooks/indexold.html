@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="1038.36">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times}
+    p.p3 {margin: 0.0px 0.0px 12.0px 0.0px; font: 12.0px Times}
+    li.li2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #0000ee}
+    span.s1 {text-decoration: underline}
+    ul.ul1 {list-style-type: disc}
+  </style>
+</head>
+<body>
+<p class="p1">{% if latest_poll_list %}</p>
+<p class="p1">{% for poll in latest_poll_list %}</p>
+<ul class="ul1">
+  <li class="li2"><span class="s1"><a href="file:///polls/%7B%7B%20poll.id%20%7D%7D/">{{ poll.title }}</a></span></li>
+</ul>
+<p class="p1">{% endfor %}</p>
+<p class="p1">{% else %}</p>
+<p class="p3">No<span class="Apple-converted-space">  </span>books are available.</p>
+<p class="p1">{% endif %}</p>
+</body>
+</html>
